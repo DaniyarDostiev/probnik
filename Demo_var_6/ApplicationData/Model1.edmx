@@ -1,0 +1,700 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище probnik_2Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="activity" Type="nvarchar" MaxLength="100" />
+          <Property Name="id_meropriyatiye" Type="int" Nullable="false" />
+          <Property Name="day" Type="nvarchar" MaxLength="100" />
+          <Property Name="start_time" Type="nvarchar" MaxLength="100" />
+          <Property Name="id_moderator" Type="int" />
+          <Property Name="id_winner" Type="int" />
+        </EntityType>
+        <EntityType Name="Activity-Zhury">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_activity" Type="int" Nullable="false" />
+          <Property Name="id_user" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="english_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="code_letters" Type="nvarchar" MaxLength="100" />
+          <Property Name="code_numbesrs" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Meropriyatiya">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="date" Type="nvarchar" MaxLength="50" />
+          <Property Name="days" Type="int" />
+          <Property Name="id_city" Type="int" />
+          <Property Name="event_picture" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Napravleniya">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fio" Type="nvarchar" MaxLength="100" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+          <Property Name="date_of_birth" Type="date" />
+          <Property Name="id_country" Type="int" />
+          <Property Name="phone_number" Type="nvarchar" MaxLength="100" />
+          <Property Name="password" Type="nvarchar" MaxLength="100" />
+          <Property Name="photo" Type="nvarchar" MaxLength="100" />
+          <Property Name="gender" Type="int" />
+          <Property Name="role" Type="int" />
+          <Property Name="napravlenie" Type="int" />
+        </EntityType>
+        <Association Name="FK_Activities_Meropriyatiya">
+          <End Role="Meropriyatiya" Type="Self.Meropriyatiya" Multiplicity="1" />
+          <End Role="Activities" Type="Self.Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meropriyatiya">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activities">
+              <PropertyRef Name="id_meropriyatiye" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activities_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Activities" Type="Self.Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activities">
+              <PropertyRef Name="id_moderator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activities_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Activities" Type="Self.Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activities">
+              <PropertyRef Name="id_winner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activity-Zhury_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+          <End Role="Activity-Zhury" Type="Self.Activity-Zhury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activity-Zhury">
+              <PropertyRef Name="id_activity" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activity-Zhury_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Activity-Zhury" Type="Self.Activity-Zhury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activity-Zhury">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Meropriyatiya_Cities">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+          <End Role="Meropriyatiya" Type="Self.Meropriyatiya" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Meropriyatiya">
+              <PropertyRef Name="id_city" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Countries">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="id_country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Genders">
+          <End Role="Genders" Type="Self.Genders" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Napravleniya">
+          <End Role="Napravleniya" Type="Self.Napravleniya" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Napravleniya">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="napravlenie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище probnik_2ModelContainer">
+          <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Activity-Zhury" EntityType="Self.Activity-Zhury" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genders" EntityType="Self.Genders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meropriyatiya" EntityType="Self.Meropriyatiya" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Napravleniya" EntityType="Self.Napravleniya" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Activities_Meropriyatiya" Association="Self.FK_Activities_Meropriyatiya">
+            <End Role="Meropriyatiya" EntitySet="Meropriyatiya" />
+            <End Role="Activities" EntitySet="Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activities_Users" Association="Self.FK_Activities_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Activities" EntitySet="Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activities_Users1" Association="Self.FK_Activities_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Activities" EntitySet="Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activity-Zhury_Activities" Association="Self.FK_Activity-Zhury_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Activity-Zhury" EntitySet="Activity-Zhury" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activity-Zhury_Users" Association="Self.FK_Activity-Zhury_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Activity-Zhury" EntitySet="Activity-Zhury" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Meropriyatiya_Cities" Association="Self.FK_Meropriyatiya_Cities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Meropriyatiya" EntitySet="Meropriyatiya" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Countries" Association="Self.FK_Users_Countries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Genders" Association="Self.FK_Users_Genders">
+            <End Role="Genders" EntitySet="Genders" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Napravleniya" Association="Self.FK_Users_Napravleniya">
+            <End Role="Napravleniya" EntitySet="Napravleniya" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="probnik_2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="probnik_2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Activities" EntityType="probnik_2Model.Activities" />
+          <EntitySet Name="Activity_Zhury" EntityType="probnik_2Model.Activity_Zhury" />
+          <EntitySet Name="Cities" EntityType="probnik_2Model.Cities" />
+          <EntitySet Name="Countries" EntityType="probnik_2Model.Countries" />
+          <EntitySet Name="Genders" EntityType="probnik_2Model.Genders" />
+          <EntitySet Name="Meropriyatiya" EntityType="probnik_2Model.Meropriyatiya" />
+          <EntitySet Name="Napravleniya" EntityType="probnik_2Model.Napravleniya" />
+          <EntitySet Name="Roles" EntityType="probnik_2Model.Roles" />
+          <EntitySet Name="sysdiagrams" EntityType="probnik_2Model.sysdiagrams" />
+          <EntitySet Name="Users" EntityType="probnik_2Model.Users" />
+          <AssociationSet Name="FK_Activities_Meropriyatiya" Association="probnik_2Model.FK_Activities_Meropriyatiya">
+            <End Role="Meropriyatiya" EntitySet="Meropriyatiya" />
+            <End Role="Activities" EntitySet="Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activities_Users" Association="probnik_2Model.FK_Activities_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Activities" EntitySet="Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activities_Users1" Association="probnik_2Model.FK_Activities_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Activities" EntitySet="Activities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activity_Zhury_Activities" Association="probnik_2Model.FK_Activity_Zhury_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Activity_Zhury" EntitySet="Activity_Zhury" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activity_Zhury_Users" Association="probnik_2Model.FK_Activity_Zhury_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Activity_Zhury" EntitySet="Activity_Zhury" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Meropriyatiya_Cities" Association="probnik_2Model.FK_Meropriyatiya_Cities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="Meropriyatiya" EntitySet="Meropriyatiya" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Countries" Association="probnik_2Model.FK_Users_Countries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Genders" Association="probnik_2Model.FK_Users_Genders">
+            <End Role="Genders" EntitySet="Genders" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Napravleniya" Association="probnik_2Model.FK_Users_Napravleniya">
+            <End Role="Napravleniya" EntitySet="Napravleniya" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="probnik_2Model.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Activities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="activity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_meropriyatiye" Type="Int32" Nullable="false" />
+          <Property Name="day" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="start_time" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_moderator" Type="Int32" />
+          <Property Name="id_winner" Type="Int32" />
+          <NavigationProperty Name="Meropriyatiya" Relationship="probnik_2Model.FK_Activities_Meropriyatiya" FromRole="Activities" ToRole="Meropriyatiya" />
+          <NavigationProperty Name="Users" Relationship="probnik_2Model.FK_Activities_Users" FromRole="Activities" ToRole="Users" />
+          <NavigationProperty Name="Users1" Relationship="probnik_2Model.FK_Activities_Users1" FromRole="Activities" ToRole="Users" />
+          <NavigationProperty Name="Activity_Zhury" Relationship="probnik_2Model.FK_Activity_Zhury_Activities" FromRole="Activities" ToRole="Activity_Zhury" />
+        </EntityType>
+        <EntityType Name="Activity_Zhury">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_activity" Type="Int32" Nullable="false" />
+          <Property Name="id_user" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Activities" Relationship="probnik_2Model.FK_Activity_Zhury_Activities" FromRole="Activity_Zhury" ToRole="Activities" />
+          <NavigationProperty Name="Users" Relationship="probnik_2Model.FK_Activity_Zhury_Users" FromRole="Activity_Zhury" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Meropriyatiya" Relationship="probnik_2Model.FK_Meropriyatiya_Cities" FromRole="Cities" ToRole="Meropriyatiya" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="english_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="code_letters" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="code_numbesrs" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="probnik_2Model.FK_Users_Countries" FromRole="Countries" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Genders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="probnik_2Model.FK_Users_Genders" FromRole="Genders" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Meropriyatiya">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="days" Type="Int32" />
+          <Property Name="id_city" Type="Int32" />
+          <Property Name="event_picture" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Activities" Relationship="probnik_2Model.FK_Activities_Meropriyatiya" FromRole="Meropriyatiya" ToRole="Activities" />
+          <NavigationProperty Name="Cities" Relationship="probnik_2Model.FK_Meropriyatiya_Cities" FromRole="Meropriyatiya" ToRole="Cities" />
+        </EntityType>
+        <EntityType Name="Napravleniya">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="probnik_2Model.FK_Users_Napravleniya" FromRole="Napravleniya" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="probnik_2Model.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fio" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date_of_birth" Type="DateTime" Precision="0" />
+          <Property Name="id_country" Type="Int32" />
+          <Property Name="phone_number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="photo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="Int32" />
+          <Property Name="role" Type="Int32" />
+          <Property Name="napravlenie" Type="Int32" />
+          <NavigationProperty Name="Activities" Relationship="probnik_2Model.FK_Activities_Users" FromRole="Users" ToRole="Activities" />
+          <NavigationProperty Name="Activities1" Relationship="probnik_2Model.FK_Activities_Users1" FromRole="Users" ToRole="Activities" />
+          <NavigationProperty Name="Activity_Zhury" Relationship="probnik_2Model.FK_Activity_Zhury_Users" FromRole="Users" ToRole="Activity_Zhury" />
+          <NavigationProperty Name="Countries" Relationship="probnik_2Model.FK_Users_Countries" FromRole="Users" ToRole="Countries" />
+          <NavigationProperty Name="Genders" Relationship="probnik_2Model.FK_Users_Genders" FromRole="Users" ToRole="Genders" />
+          <NavigationProperty Name="Napravleniya" Relationship="probnik_2Model.FK_Users_Napravleniya" FromRole="Users" ToRole="Napravleniya" />
+          <NavigationProperty Name="Roles" Relationship="probnik_2Model.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+        </EntityType>
+        <Association Name="FK_Activities_Meropriyatiya">
+          <End Type="probnik_2Model.Meropriyatiya" Role="Meropriyatiya" Multiplicity="1" />
+          <End Type="probnik_2Model.Activities" Role="Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meropriyatiya">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activities">
+              <PropertyRef Name="id_meropriyatiye" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activities_Users">
+          <End Type="probnik_2Model.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="probnik_2Model.Activities" Role="Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activities">
+              <PropertyRef Name="id_moderator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activities_Users1">
+          <End Type="probnik_2Model.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="probnik_2Model.Activities" Role="Activities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activities">
+              <PropertyRef Name="id_winner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activity_Zhury_Activities">
+          <End Type="probnik_2Model.Activities" Role="Activities" Multiplicity="1" />
+          <End Type="probnik_2Model.Activity_Zhury" Role="Activity_Zhury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activity_Zhury">
+              <PropertyRef Name="id_activity" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activity_Zhury_Users">
+          <End Type="probnik_2Model.Users" Role="Users" Multiplicity="1" />
+          <End Type="probnik_2Model.Activity_Zhury" Role="Activity_Zhury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activity_Zhury">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Meropriyatiya_Cities">
+          <End Type="probnik_2Model.Cities" Role="Cities" Multiplicity="0..1" />
+          <End Type="probnik_2Model.Meropriyatiya" Role="Meropriyatiya" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Meropriyatiya">
+              <PropertyRef Name="id_city" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Countries">
+          <End Type="probnik_2Model.Countries" Role="Countries" Multiplicity="0..1" />
+          <End Type="probnik_2Model.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="id_country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Genders">
+          <End Type="probnik_2Model.Genders" Role="Genders" Multiplicity="0..1" />
+          <End Type="probnik_2Model.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Napravleniya">
+          <End Type="probnik_2Model.Napravleniya" Role="Napravleniya" Multiplicity="0..1" />
+          <End Type="probnik_2Model.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Napravleniya">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="napravlenie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Type="probnik_2Model.Roles" Role="Roles" Multiplicity="0..1" />
+          <End Type="probnik_2Model.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище probnik_2ModelContainer" CdmEntityContainer="probnik_2Entities">
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="probnik_2Model.Activities">
+              <MappingFragment StoreEntitySet="Activities">
+                <ScalarProperty Name="id_winner" ColumnName="id_winner" />
+                <ScalarProperty Name="id_moderator" ColumnName="id_moderator" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="day" ColumnName="day" />
+                <ScalarProperty Name="id_meropriyatiye" ColumnName="id_meropriyatiye" />
+                <ScalarProperty Name="activity" ColumnName="activity" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Activity_Zhury">
+            <EntityTypeMapping TypeName="probnik_2Model.Activity_Zhury">
+              <MappingFragment StoreEntitySet="Activity-Zhury">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_activity" ColumnName="id_activity" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="probnik_2Model.Cities">
+              <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="probnik_2Model.Countries">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="code_numbesrs" ColumnName="code_numbesrs" />
+                <ScalarProperty Name="code_letters" ColumnName="code_letters" />
+                <ScalarProperty Name="english_name" ColumnName="english_name" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="probnik_2Model.Genders">
+              <MappingFragment StoreEntitySet="Genders">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meropriyatiya">
+            <EntityTypeMapping TypeName="probnik_2Model.Meropriyatiya">
+              <MappingFragment StoreEntitySet="Meropriyatiya">
+                <ScalarProperty Name="event_picture" ColumnName="event_picture" />
+                <ScalarProperty Name="id_city" ColumnName="id_city" />
+                <ScalarProperty Name="days" ColumnName="days" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Napravleniya">
+            <EntityTypeMapping TypeName="probnik_2Model.Napravleniya">
+              <MappingFragment StoreEntitySet="Napravleniya">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="probnik_2Model.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="probnik_2Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="probnik_2Model.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="napravlenie" ColumnName="napravlenie" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="id_country" ColumnName="id_country" />
+                <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="fio" ColumnName="fio" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
